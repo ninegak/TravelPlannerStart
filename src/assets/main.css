@@ -1,0 +1,284 @@
+/* 
+general 
+-------
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font: 15px/1.4 "Poppins", sans-serif;
+  color: #333;
+}
+
+
+#app {
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: red;
+  transition: 0.4s;
+  font-weight: 400;
+  margin: 0px 66px;
+  border-bottom: 2px solid transparent;
+  transition: .3s;
+  font-size: 18px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    border-color: red;
+  }
+}
+
+
+.app-modal .container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+input[type="text"],input[type="number"], input[type="date"] {
+  width: 100%;
+  height: 50px;
+  font: 15px/1.4 "Poppins", sans-serif;
+  padding: 15px;
+  background: #f3f3f3;
+  color: #333;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  transition: border 0.3s linear;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border: 1px solid #4ec5c1;
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border: 1px solid #4ec5c1;
+}
+
+input[type="date"]:focus {
+  outline: none;
+  border: 1px solid #4ec5c1;
+}
+
+button {
+  cursor: pointer;
+  font: 15px/1.4 "Poppins", sans-serif;
+  color: #555;
+  transition: all 0.3s linear;
+}
+
+button:focus {
+  outline: none;
+}
+
+h1 {
+  font-size: 22px;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 
+task 
+----
+*/
+.task {
+  background: #fff;
+  border-radius: 25px;
+  padding: 30px;
+  box-shadow: 0px 0px 40px 0px rgba(0,0,0,0.1);
+}
+
+.title {
+  margin: 0 0 20px;
+}
+
+.task p {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.form {
+  position: relative;
+  margin: 0 0 30px;
+}
+
+
+body {
+ font-family: 'montserrat', sans-serif;
+}
+
+.startplan {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+#app-modal {
+ min-width: 300px;
+ margin: 150px;
+ margin-top: 125px;
+ position: relative;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ overflow-x: hidden;
+ background-color: #4b4545;
+ height: 90px;
+ width: 70%;
+}
+
+#app-modal p {
+  margin-left: 8px;
+  color: white;
+  font-size: 18px;
+}
+
+.button {
+ appearance: none;
+ outline: none;
+ border: none;
+ background: none;
+ cursor: pointer;
+ margin-right: 15px;
+ 
+ display: inline-block;
+ padding: 5px 15px;
+ background-image: linear-gradient(to right, #CC2E5D, #FF5858);
+ border-radius: 8px;
+ 
+ color: #FFF;
+ font-size: 18px;
+ font-weight: 700;
+ 
+ box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
+ transition: 0.4s ease-out;
+ 
+ &:hover {
+  box-shadow: 6px 6px rgba(0, 0, 0, 0.6);
+ }
+}
+
+.modal-overlay {
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ z-index: 98;
+}
+
+.modal {
+ position: fixed;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ z-index: 99;
+ 
+ height: 90vh;
+ overflow: scroll;
+
+ width: 100%;
+ max-width: 500px;
+ background-color: #cabebe7c;
+ border-radius: 16px;
+ 
+ padding: 25px;
+ 
+ h1 {
+  color: #222;
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 15px;
+ }
+ 
+ p {
+  color: #666;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 15px;
+ }
+}
+
+
+.modal #close {
+  transform: translateX(65%);
+  position: absolute;
+  margin-top: 15px;
+  left: 20%;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+ transition: opacity .5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+ opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+ transition: transform .5s;
+}
+
+.slide-enter,
+.slide-leave-to {
+ transform: translateY(-50%) translateX(100vw);
+}
+
+.display {
+  display: flex;
+}
+
+.display .card{
+
+  background-color: #fdf8f8dc;
+  min-width: 280px;
+  max-width: 320px;
+  margin-top: 15px;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px;
+  text-align: center;
+}
+
+.card p{
+  margin: 5px;
+}
+
+#go {
+  display: flex;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  margin-top: 15px;
+  width: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+  .display {
+    flex-wrap: wrap;
+  }
+  
+}
