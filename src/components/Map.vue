@@ -12,15 +12,15 @@
     <section>
       <div id="map"></div>
     </section>
-    <p>Number of People?</p>
-    <input type="number" name="numb" id="numb" v-model="people">
-    <p>Budget</p>
-    <input type="number" name="cost" id="cost" v-model="cost">
-    <p>How long do you want to stay?</p>
-    <input type="number" name="day" id="day" v-model="days">
-    <p>which dates?</p>
-    <input type="date" name="date" id="date" v-model="date">
-    <button @click="getPlaceName" class="button" id="go">Go</button>
+      <p>Number of People?</p>
+      <input type="number" name="numb" id="numb" v-model="people">
+      <p>Budget</p>
+      <input type="number" name="cost" id="cost" v-model="cost">
+      <p>How long do you want to stay?</p>
+      <input type="number" name="day" id="day" v-model="days">
+      <p>which dates?</p>
+      <input type="date" name="date" id="date" v-model="date">
+      <button @click="getPlaceName" class="button" id="go">Go</button>
       <p v-if="placeName">Place Name: {{ placeName }}</p>
   </div>
 </template>
@@ -58,18 +58,19 @@ export default {
           console.log(error.message);
         });
     },
-    getPlaceName() {
+    async getPlaceName() {
       // Initialize the Google Maps Geocoder
       const geocoder = new google.maps.Geocoder();
       const self = this;
       // Geocode the user's input address
-      geocoder.geocode({ address: this.address }, (results, status) => {
+      geocoder.geocode({ address: this.address }, async (results, status) => {
+
         if (status === google.maps.GeocoderStatus.OK) {
           if (results[0]) {
             // Get the place name from the geocoded result
             const placeName = results[0].formatted_address;
             self.placeName = placeName;
-
+            await this.showNearbyRestaurants(results[0].geometry.location);
             this.placeName = placeName;
             this.$emit("data-updated", {
             placeName: this.placeName,
@@ -88,6 +89,38 @@ export default {
       });
       //console.log(this.address)
     },
+    async showNearbyRestaurants(location) {
+      // Create a new map centered around the location
+      let map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: location,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+
+      // Create a request for nearby places (restaurants in this case)
+      const request = {
+        location: location,
+        radius: 1000, // Adjust the radius as needed (in meters)
+        type: 'restaurant',
+      };
+
+      // Create a PlacesService object to search for nearby places
+      const placesService = new google.maps.places.PlacesService(map);
+
+      // Perform the nearby places search
+      placesService.nearbySearch(request, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (const place of results) {
+            // Create a marker for each restaurant
+            new google.maps.Marker({
+              position: place.geometry.location,
+              map: map,
+              title: place.name,
+            });
+          }
+        }
+      });
+    },
     clearLocalStorage() {
       localStorage.clear();
   },
@@ -104,6 +137,29 @@ export default {
       });
     }
   },
+  showRestaurantDetails(placeId) {
+      // Create a map if it doesn't exist
+      if (!this.restaurantMap) {
+        this.restaurantMap = new google.maps.Map(document.getElementById("map"), {
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+        });
+      }
+
+      // Create a PlacesService object to get restaurant details
+      const placesService = new google.maps.places.PlacesService(this.restaurantMap);
+
+      // Request additional details for the restaurant
+      placesService.getDetails(
+        { placeId },
+        (place, status) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            // Display the restaurant details
+            console.log(place); // You can customize how you display the details
+          }
+        }
+      );
+    },
   
   data() {
     return {
@@ -113,6 +169,7 @@ export default {
       cost: 0,
       days: 0,
       date: null,
+      infoWindow: null,
     };
   },
   mounted() {
